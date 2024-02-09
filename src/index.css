@@ -1,3 +1,21 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+/* @import url("./styles/theme.css"); */
+
+@layer utilities {
+}
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 3px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background-color: gainsboro;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background-color: #777777;
+}
