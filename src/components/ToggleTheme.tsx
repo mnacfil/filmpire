@@ -1,12 +1,14 @@
 import React from "react";
 import navIcons from "../assets/nav";
-import icons from "../assets/genres";
+import { useTheme } from "../context/ThemeContext";
+import { CiLight, CiDark } from "react-icons/ci";
 
 const ToggleTheme = () => {
+  const { theme, toggleTheme } = useTheme();
   return (
-    <button>
+    <button onClick={toggleTheme}>
       {/* <IconToggle /> */}
-      <img src={navIcons.sun} alt="action" width={24} height={24} />
+      {theme === "dark" ? <CiLight className="w-[27px]" /> : <CiDark />}
     </button>
   );
 };

@@ -1,6 +1,7 @@
 import React from "react";
 import ToggleTheme from "./ToggleTheme";
 import navIcons from "../assets/nav";
+import { CiLight } from "react-icons/ci";
 
 const Navbar = () => {
   const handleSubmit = () => {};
@@ -9,7 +10,7 @@ const Navbar = () => {
       <ToggleTheme />
       <form onSubmit={handleSubmit}>
         <div className="flex gap-2 border-b-2 border-b-slate-400">
-          <img src={navIcons.search} alt="user avatar" width={25} height={20} />
+          <CiLight />
           <input
             type="text"
             className="bg-transparent outline-none border-none mb-1"
@@ -17,7 +18,7 @@ const Navbar = () => {
         </div>
       </form>
       <button className="flex gap-2 items-center">
-        <p>Login</p>
+        <p className="text-dark200_light800">Login</p>
         <img src={navIcons.user} alt="user avatar" width={24} height={24} />
       </button>
     </nav>
