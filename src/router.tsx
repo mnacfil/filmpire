@@ -2,13 +2,14 @@ import React from "react";
 import { createBrowserRouter } from "react-router-dom";
 import RootLayout from "./RootLayout";
 import { About, Home } from "./pages";
-import { getMovieGenre } from "./services/tmdbApi";
+import { loader as rootLoader } from "./RootLayout";
+import { queryClient } from "./App";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <RootLayout />,
-    loader: getMovieGenre,
+    loader: rootLoader(queryClient),
     children: [
       {
         path: "/",

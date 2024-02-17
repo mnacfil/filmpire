@@ -2,6 +2,21 @@ import React, { ReactNode } from "react";
 import { Outlet } from "react-router-dom";
 import Navbar from "./components/Navbar";
 import Sidebar from "./components/Sidebar";
+import { baseUrl } from "./constants";
+import { getMovieGenre } from "./services/tmdbApi";
+import { QueryClient } from "@tanstack/react-query";
+
+export const genreQuery = () => ({
+  queryKey: ["genre"],
+  queryFn: getMovieGenre,
+});
+
+export const loader = (queryClient: QueryClient) => async () => {
+  if (!queryClient.getQueryData(genreQuery().queryKey)) {
+    await queryClient.fetchQuery(genreQuery());
+  }
+  return true;
+};
 
 const RootLayout = () => {
   return (

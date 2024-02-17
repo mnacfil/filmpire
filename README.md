@@ -14,3 +14,8 @@ Currently, two official plugins are available:
 - TailwindCss
 - React router dom - for routing
 - React Query - for managing server state
+
+## TODO
+
+- Error boundary
+- Authentication

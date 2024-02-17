@@ -6,7 +6,6 @@ import { useQuery, useQueryClient } from "@tanstack/react-query";
 const Sidebar = () => {
   const result = useLoaderData();
   const queryClient = useQueryClient();
-  queryClient.setQueryData(["genre"], result);
 
   return (
     <div className="pt-8 pb-14 overflow-y-auto flex flex-col divide-y-[1px] divide-light-700 dark:divide-dark-400 h-screen custom-scrollbar background-light900_dark300">
