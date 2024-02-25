@@ -1,6 +1,6 @@
 import icons from "../assets/genres";
 
-type Sidebar = Array<{ icon: keyof typeof icons; href: string; label: string }>;
+type Sidebar = Array<{ icon: string; href: string; label: string }>;
 
 export const categories: Sidebar = [
   {

@@ -7,7 +7,6 @@ export const axiosInstance = axios.create({
     Accept: "application/json",
     Authorization: `Bearer ${token}`,
   },
-  timeout: 1000,
 });
 
 // axios.interceptors.request.use(function (config) {

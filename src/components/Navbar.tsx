@@ -18,11 +18,10 @@ const Navbar = () => {
       if (token) {
         if (sessionIdFromLS) {
           // fetch the user data
-          console.log("user data");
+          // console.log("user data");
         } else {
           const sessionId = await createSessionId();
-          console.log(sessionId);
-          console.log("fetch with user data");
+          // console.log("fetch with user data");
         }
       }
     };

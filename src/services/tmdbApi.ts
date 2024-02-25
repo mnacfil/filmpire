@@ -1,12 +1,42 @@
 // TMDB Api
-import { AuthRequestToken, AuthSession } from "../types";
+import {
+  AuthRequestToken,
+  AuthSession,
+  ImagesConfiguration,
+  MovieListGenre,
+  Movies,
+} from "../types";
 import { axiosInstance } from "./axios";
 
 const authenticateUrl = "https://www.themoviedb.org/authenticate";
 
 export const getMovieGenre = async () => {
   try {
-    const response = await axiosInstance.get("/movie/now_playing");
+    const response =
+      await axiosInstance.get<MovieListGenre>("/genre/movie/list");
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return Promise.reject(error);
+  }
+};
+
+export const getMovieListByGenre = async (genre: number) => {
+  try {
+    // page must be dynamic as it is used in pagination
+    const response = await axiosInstance.get<Movies>(
+      `/discover/movie?without_genres=${genre}&page=1`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    return Promise.reject(error);
+  }
+};
+
+export const getPopularMovies = async () => {
+  try {
+    const response = await axiosInstance.get("/movie/popular");
     return response.data;
   } catch (error) {
     console.log(error);
@@ -47,5 +77,15 @@ export const createSessionId = async () => {
       console.log("Sorry your session could not be created.");
       return Promise.reject(error);
     }
+  }
+};
+
+export const getConfiguration = async () => {
+  try {
+    const response =
+      await axiosInstance.get<ImagesConfiguration>("/configuration");
+    return response.data;
+  } catch (error) {
+    return Promise.reject(error);
   }
 };

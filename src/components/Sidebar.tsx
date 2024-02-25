@@ -2,10 +2,25 @@ import React from "react";
 import { categories, genres } from "../constants/sidebarLinks";
 import { NavLink, useLoaderData } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { MovieListGenre } from "../types";
+import { getMovieListByGenre } from "../services/tmdbApi";
+import { useMovieCategory } from "../context/MovieContext.tsx";
+
+const movieListGenreQuery = (genre: number) => ({
+  queryKey: ["genre", genre],
+  queryFn: () => getMovieListByGenre(genre),
+});
 
 const Sidebar = () => {
-  const result = useLoaderData();
+  const { fetchMoviesByGenre } = useMovieCategory();
+  const data = useLoaderData() as MovieListGenre;
   const queryClient = useQueryClient();
+
+  const handleClick = (genre: number) => {
+    // fetch movie list by genre
+    // queryClient.fetchQuery(movieListGenreQuery(genre));
+    fetchMoviesByGenre(genre);
+  };
 
   return (
     <div className="pt-8 pb-14 overflow-y-auto flex flex-col divide-y-[1px] divide-light-700 dark:divide-dark-400 h-screen custom-scrollbar background-light900_dark300">
@@ -48,7 +63,18 @@ const Sidebar = () => {
           Genres
         </p>
         <ul className="flex flex-col gap-3 px-6">
-          {genres.map((genre) => {
+          {data.genres.map((genre) => (
+            <li key={genre.id}>
+              <button
+                className={`flex gap-3 base-medium text-dark200_light900 w-full`}
+                onClick={() => handleClick(genre.id)}
+              >
+                <img src={""} alt={""} width={27} height={27} />
+                {genre.name}
+              </button>
+            </li>
+          ))}
+          {/* {genres.map((genre) => {
             return (
               <li key={genre.href}>
                 <NavLink
@@ -65,7 +91,7 @@ const Sidebar = () => {
                 </NavLink>
               </li>
             );
-          })}
+          })} */}
         </ul>
       </div>
     </div>
