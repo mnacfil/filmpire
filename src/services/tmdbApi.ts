@@ -1,4 +1,5 @@
 // TMDB Api
+import { Category } from "../context/MovieContext";
 import {
   AuthRequestToken,
   AuthSession,
@@ -25,7 +26,7 @@ export const getMovieListByGenre = async (genre: number) => {
   try {
     // page must be dynamic as it is used in pagination
     const response = await axiosInstance.get<Movies>(
-      `/discover/movie?without_genres=${genre}&page=1`
+      `/discover/movie?with_genres=${genre}&page=1`
     );
     return response.data;
   } catch (error) {
@@ -34,9 +35,17 @@ export const getMovieListByGenre = async (genre: number) => {
   }
 };
 
-export const getPopularMovies = async () => {
+export const getMovieListByCategory = async (category: Category) => {
   try {
-    const response = await axiosInstance.get("/movie/popular");
+    let path: Category;
+    if (category === "top_rated") {
+      path = "top_rated";
+    } else if (category === "popular") {
+      path = "popular";
+    } else {
+      path = "upcoming";
+    }
+    const response = await axiosInstance.get<Movies>(`/movie/${path}`);
     return response.data;
   } catch (error) {
     console.log(error);

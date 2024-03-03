@@ -4,22 +4,31 @@ import { NavLink, useLoaderData } from "react-router-dom";
 import { useQuery, useQueryClient } from "@tanstack/react-query";
 import { MovieListGenre } from "../types";
 import { getMovieListByGenre } from "../services/tmdbApi";
-import { useMovieCategory } from "../context/MovieContext.tsx";
+import { Category, useMovieCategory } from "../context/MovieContext.tsx";
 
 const movieListGenreQuery = (genre: number) => ({
   queryKey: ["genre", genre],
   queryFn: () => getMovieListByGenre(genre),
+  staleTime: 10 * 1000,
 });
 
 const Sidebar = () => {
-  const { fetchMoviesByGenre } = useMovieCategory();
+  const { setGenre, setCategory } = useMovieCategory();
   const data = useLoaderData() as MovieListGenre;
   const queryClient = useQueryClient();
 
-  const handleClick = (genre: number) => {
-    // fetch movie list by genre
-    // queryClient.fetchQuery(movieListGenreQuery(genre));
-    fetchMoviesByGenre(genre);
+  const handleMouseEnter = async (genre: number) => {
+    await queryClient.prefetchQuery(movieListGenreQuery(genre));
+  };
+
+  const handleGenreMovies = (genre: number) => {
+    setGenre(genre);
+    setCategory(null);
+  };
+
+  const handleCategoryMovies = (category: Category) => {
+    setCategory(category);
+    setGenre(0);
   };
 
   return (
@@ -39,20 +48,19 @@ const Sidebar = () => {
         <ul className="flex flex-col gap-3 px-6">
           {categories.map((category) => {
             return (
-              <li key={category.href}>
-                <NavLink
-                  to={category.href}
-                  className={`flex gap-3 base-medium text-dark200_light900`}
-                >
-                  <img
-                    src={category.icon}
-                    alt={category.label}
-                    width={27}
-                    height={27}
-                    className="object-contain"
-                  />
-                  {category.label}
-                </NavLink>
+              <li
+                key={category.value}
+                onClick={() => handleCategoryMovies(category.value as Category)}
+                className={`flex gap-3 base-medium text-dark200_light900 cursor-pointer`}
+              >
+                <img
+                  src={category.icon}
+                  alt={category.label}
+                  width={27}
+                  height={27}
+                  className="invert-colors"
+                />
+                <p>{category.label}</p>
               </li>
             );
           })}
@@ -67,7 +75,8 @@ const Sidebar = () => {
             <li key={genre.id}>
               <button
                 className={`flex gap-3 base-medium text-dark200_light900 w-full`}
-                onClick={() => handleClick(genre.id)}
+                onClick={() => handleGenreMovies(genre.id)}
+                onMouseEnter={() => handleMouseEnter(genre.id)}
               >
                 <img src={""} alt={""} width={27} height={27} />
                 {genre.name}

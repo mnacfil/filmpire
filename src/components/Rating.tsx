@@ -18,13 +18,13 @@ const Rating = ({ rating }: Props) => {
     <div className="flex items-center justify-center space-x-2">
       {Array.from({ length: 5 }, (_, i) => {
         if (parseInt(whole) >= i + 1) {
-          return <ImStarFull size={SIZE} className="text-yellow-500" />;
+          return <ImStarFull size={SIZE} className="text-yellow-500" key={i} />;
         }
         if (parseInt(whole) !== i + 1 && parseInt(excess) >= 0.5) {
           excess = "0";
-          return <ImStarHalf size={SIZE} className="text-yellow-500" />;
+          return <ImStarHalf size={SIZE} className="text-yellow-500" key={i} />;
         }
-        return <ImStarEmpty size={SIZE} className="text-gray-500" />;
+        return <ImStarEmpty size={SIZE} className="text-gray-500" key={i} />;
       })}
     </div>
   );

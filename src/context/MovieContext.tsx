@@ -1,52 +1,54 @@
 import React, { useContext, useState } from "react";
 import { Movies, Parent } from "../types";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { getMovieListByGenre } from "../services/tmdbApi";
+import {
+  UseQueryResult,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import {
+  getMovieListByCategory,
+  getMovieListByGenre,
+} from "../services/tmdbApi";
 
-type SearchOptions = "category" | "genre";
+export type Category = "popular" | "top_rated" | "upcoming" | null;
 type MovieValue = {
-  searchBy: SearchOptions;
-  moviesByGenre: Movies | undefined;
-  isLoading: boolean;
-  fetchMoviesByGenre: (genre: number) => void;
+  moviesGenreQuery: UseQueryResult<Movies, Error>;
+  moviesCategoryQuery: UseQueryResult<Movies, Error>;
+  genre: number;
+  category: Category;
+  setGenre: (genre: number) => void;
+  setCategory: (category: Category) => void;
 };
 
 const MovieContext = React.createContext<MovieValue | null>(null);
 
 const movieListGenreQuery = (genre: number) => ({
-  queryKey: [`genre-${genre}`],
+  queryKey: ["discover-movie", genre],
   queryFn: () => getMovieListByGenre(genre),
   staleTime: 10000,
 });
 
-const MovieProvider = ({ children }: Parent) => {
-  const [searchBy, setSearchBy] = useState<SearchOptions>("category");
-  const [moviesByGenre, setMoviesByGenre] = useState<Movies | undefined>(
-    undefined
-  );
-  const [isLoading, setisLoading] = useState(false);
-  const queryClient = useQueryClient();
+const movieListByCategory = (category: Category) => ({
+  queryKey: ["category-move", category],
+  queryFn: () => getMovieListByCategory(category),
+});
 
-  const fetchMoviesByGenre = async (genre: number) => {
-    setSearchBy("genre");
-    setisLoading(true);
-    try {
-      const data = await queryClient.fetchQuery(movieListGenreQuery(genre));
-      setMoviesByGenre(data);
-    } catch (error) {
-      console.log(error);
-    } finally {
-      setisLoading(false);
-    }
-  };
+const MovieProvider = ({ children }: Parent) => {
+  const [category, setCategory] = useState<Category>("popular");
+  const [genre, setGenre] = useState(0);
+
+  const moviesGenreQuery = useQuery(movieListGenreQuery(genre));
+  const moviesCategoryQuery = useQuery(movieListByCategory(category));
 
   return (
     <MovieContext.Provider
       value={{
-        searchBy,
-        isLoading,
-        moviesByGenre,
-        fetchMoviesByGenre,
+        genre,
+        category,
+        moviesGenreQuery,
+        moviesCategoryQuery,
+        setGenre,
+        setCategory,
       }}
     >
       {children}

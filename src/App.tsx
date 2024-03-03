@@ -8,6 +8,7 @@ import RootLayout from "./RootLayout";
 import { About, Home, Approved, Movie } from "./pages";
 import { loader as rootLoader } from "./RootLayout";
 import { loader as homeLoader } from "./pages/Home";
+import HomeError from "./components/HomeError";
 
 export const queryClient = new QueryClient({
   defaultOptions: {
@@ -22,10 +23,12 @@ export const router = createBrowserRouter([
     path: "/",
     element: <RootLayout />,
     loader: rootLoader(queryClient),
+    errorElement: <p>Error in the Root</p>,
     children: [
       {
         path: "/",
         element: <Home />,
+        errorElement: <HomeError />,
         loader: homeLoader(queryClient),
       },
       {

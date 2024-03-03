@@ -43,15 +43,9 @@ const genreOptions = (genre: number) => {
 
 const RootLayout = () => {
   const queryClient = useQueryClient();
-  queryClient.prefetchQuery(genreOptions(28));
-  queryClient.prefetchQuery(genreOptions(12));
-  queryClient.prefetchQuery(genreOptions(16));
   if (!queryClient.getQueryData(configurationQuery().queryKey)) {
     queryClient.fetchQuery(configurationQuery());
   }
-  // const data = useQueries({
-  //   queries: [genreOptions(28), genreOptions(12), genreOptions(16)],
-  // });
 
   return (
     <main className="min-h-screen w-full relative">

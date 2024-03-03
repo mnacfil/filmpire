@@ -1,20 +1,20 @@
 import icons from "../assets/genres";
 
-type Sidebar = Array<{ icon: string; href: string; label: string }>;
+type Sidebar = Array<{ icon: string; value: string; label: string }>;
 
 export const categories: Sidebar = [
   {
-    href: "/popular",
+    value: "popular",
     label: "Popular",
     icon: icons.popular,
   },
   {
-    href: "/top-rate",
+    value: "top_rated",
     label: "Top Rated",
     icon: icons["top rated"],
   },
   {
-    href: "/upcoming",
+    value: "upcoming",
     label: "Upcoming",
     icon: icons.upcoming,
   },
@@ -22,97 +22,97 @@ export const categories: Sidebar = [
 
 export const genres: Sidebar = [
   {
-    href: "/action",
+    value: "/action",
     label: "Action",
     icon: icons.action,
   },
   {
-    href: "/Adventure",
+    value: "/Adventure",
     label: "adventure",
     icon: icons.adventure,
   },
   {
-    href: "/animation",
+    value: "/animation",
     label: "Animation",
     icon: icons.animation,
   },
   {
-    href: "/comedy",
+    value: "/comedy",
     label: "Comedy",
     icon: icons.comedy,
   },
   {
-    href: "/crime",
+    value: "/crime",
     label: "Crime",
     icon: icons.crime,
   },
   {
-    href: "/documentary",
+    value: "/documentary",
     label: "Documentary",
     icon: icons.documentary,
   },
   {
-    href: "/drama",
+    value: "/drama",
     label: "Drama",
     icon: icons.drama,
   },
   {
-    href: "/family",
+    value: "/family",
     label: "Family",
     icon: icons.family,
   },
   {
-    href: "/fantasy",
+    value: "/fantasy",
     label: "Fantasy",
     icon: icons.fantasy,
   },
   {
-    href: "/history",
+    value: "/history",
     label: "History",
     icon: icons.history,
   },
   {
-    href: "/horror",
+    value: "/horror",
     label: "Horror",
     icon: icons.horror,
   },
   {
-    href: "/music",
+    value: "/music",
     label: "Music",
     icon: icons.music,
   },
   {
-    href: "/mystery",
+    value: "/mystery",
     label: "Mystery",
     icon: icons.mystery,
   },
   {
-    href: "/romance",
+    value: "/romance",
     label: "Romance",
     icon: icons.romance,
   },
   {
-    href: "/science-fiction",
+    value: "/science-fiction",
     label: "Science Fiction",
     icon: icons["science fiction"],
   },
   {
-    href: "/tv-movie",
+    value: "/tv-movie",
     label: "Tv Movie",
     icon: icons["tv movie"],
   },
   {
-    href: "/thriller",
+    value: "/thriller",
     label: "Thriller",
     icon: icons.thriller,
   },
   {
-    href: "/war",
+    value: "/war",
     label: "War",
     icon: icons.war,
   },
   {
-    href: "/western",
+    value: "/western",
     label: "Western",
     icon: icons.western,
   },

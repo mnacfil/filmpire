@@ -3,30 +3,42 @@ import { QueryClient, useQueryClient } from "@tanstack/react-query";
 import { useLoaderData } from "react-router-dom";
 import MovieList from "../components/MovieList";
 import { Movies } from "../types";
-import { getPopularMovies } from "../services/tmdbApi";
-import { useMovieCategory } from "../context/MovieContext";
+import { getMovieListByCategory } from "../services/tmdbApi";
+import { Category, useMovieCategory } from "../context/MovieContext";
 
-export const popularMoviesQuery = () => ({
+export const popularMoviesQuery = (category: Category) => ({
   queryKey: ["popular_movie"],
-  queryFn: getPopularMovies,
+  queryFn: () => getMovieListByCategory(category),
   staleTime: 10000,
 });
 
 export const loader = (queryClient: QueryClient) => async () => {
-  return await queryClient.ensureQueryData<Movies>(popularMoviesQuery());
+  return await queryClient.ensureQueryData<Movies>(
+    popularMoviesQuery("popular")
+  );
 };
 
 const Home = () => {
   const data = useLoaderData() as Movies;
-  const { moviesByGenre, searchBy } = useMovieCategory();
+  const { genre, moviesGenreQuery, category, moviesCategoryQuery } =
+    useMovieCategory();
 
-  console.log(moviesByGenre);
-
-  if (searchBy === "genre") {
-    return <MovieList data={moviesByGenre} />;
+  if (moviesGenreQuery.isLoading || moviesCategoryQuery.isLoading) {
+    return <p>Loading...</p>;
+  }
+  if (moviesGenreQuery.error || moviesCategoryQuery.error) {
+    return <p className="pl-80">Error happen</p>;
   }
 
-  return <MovieList data={data} />;
+  if (genre !== 0) {
+    return <MovieList data={moviesGenreQuery.data} />;
+  }
+
+  if (category !== null) {
+    return <MovieList data={moviesCategoryQuery.data} />;
+  }
+
+  return null;
 };
 
 export default Home;
