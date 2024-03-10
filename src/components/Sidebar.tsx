@@ -8,12 +8,19 @@ import { Category, useMovieCategory } from "../context/MovieContext.tsx";
 
 const movieListGenreQuery = (genre: number) => ({
   queryKey: ["genre", genre],
-  queryFn: () => getMovieListByGenre(genre),
+  queryFn: () => getMovieListByGenre(genre, 1),
   staleTime: 10 * 1000,
 });
 
 const Sidebar = () => {
-  const { setGenre, setCategory } = useMovieCategory();
+  const {
+    setGenre,
+    setCategory,
+    setPage,
+    page,
+    setCategoryPage,
+    categoryPage,
+  } = useMovieCategory();
   const data = useLoaderData() as MovieListGenre;
   const queryClient = useQueryClient();
 
@@ -22,11 +29,17 @@ const Sidebar = () => {
   };
 
   const handleGenreMovies = (genre: number) => {
+    if (page !== 1) {
+      setPage(1);
+    }
     setGenre(genre);
     setCategory(null);
   };
 
   const handleCategoryMovies = (category: Category) => {
+    if (categoryPage !== 1) {
+      setCategoryPage(1);
+    }
     setCategory(category);
     setGenre(0);
   };

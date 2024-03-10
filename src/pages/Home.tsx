@@ -8,7 +8,7 @@ import { Category, useMovieCategory } from "../context/MovieContext";
 
 export const popularMoviesQuery = (category: Category) => ({
   queryKey: ["popular_movie"],
-  queryFn: () => getMovieListByCategory(category),
+  queryFn: () => getMovieListByCategory(category, 1),
   staleTime: 10000,
 });
 
@@ -38,7 +38,8 @@ const Home = () => {
     return <MovieList data={moviesCategoryQuery.data} />;
   }
 
-  return null;
+  // display by default
+  return <MovieList data={data} />;
 };
 
 export default Home;

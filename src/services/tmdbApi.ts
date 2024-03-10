@@ -22,11 +22,11 @@ export const getMovieGenre = async () => {
   }
 };
 
-export const getMovieListByGenre = async (genre: number) => {
+export const getMovieListByGenre = async (genre: number, page: number) => {
   try {
     // page must be dynamic as it is used in pagination
     const response = await axiosInstance.get<Movies>(
-      `/discover/movie?with_genres=${genre}&page=1`
+      `/discover/movie?with_genres=${genre}&page=${page}`
     );
     return response.data;
   } catch (error) {
@@ -35,7 +35,10 @@ export const getMovieListByGenre = async (genre: number) => {
   }
 };
 
-export const getMovieListByCategory = async (category: Category) => {
+export const getMovieListByCategory = async (
+  category: Category,
+  page: number
+) => {
   try {
     let path: Category;
     if (category === "top_rated") {
@@ -45,7 +48,9 @@ export const getMovieListByCategory = async (category: Category) => {
     } else {
       path = "upcoming";
     }
-    const response = await axiosInstance.get<Movies>(`/movie/${path}`);
+    const response = await axiosInstance.get<Movies>(
+      `/movie/${path}?language=en-US&page=${page}`
+    );
     return response.data;
   } catch (error) {
     console.log(error);

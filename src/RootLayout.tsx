@@ -33,13 +33,13 @@ export const loader = (queryClient: QueryClient) => async () => {
   }
 };
 
-const genreOptions = (genre: number) => {
-  return queryOptions({
-    queryKey: ["genre", genre],
-    queryFn: () => getMovieListByGenre(genre),
-    staleTime: 1000 * 5,
-  });
-};
+// const genreOptions = (genre: number) => {
+//   return queryOptions({
+//     queryKey: ["genre", genre],
+//     queryFn: () => getMovieListByGenre(genre),
+//     staleTime: 1000 * 5,
+//   });
+// };
 
 const RootLayout = () => {
   const queryClient = useQueryClient();
