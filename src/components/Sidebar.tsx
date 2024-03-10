@@ -1,10 +1,12 @@
-import React from "react";
-import { categories, genres } from "../constants/sidebarLinks";
+import React, { useState } from "react";
+import { categories } from "../constants/sidebarLinks";
 import { NavLink, useLoaderData } from "react-router-dom";
-import { useQuery, useQueryClient } from "@tanstack/react-query";
+import { useQueryClient } from "@tanstack/react-query";
 import { MovieListGenre } from "../types";
 import { getMovieListByGenre } from "../services/tmdbApi";
 import { Category, useMovieCategory } from "../context/MovieContext.tsx";
+import { useTheme } from "../context";
+import genresIcon from "../assets/genres/index.ts";
 
 const movieListGenreQuery = (genre: number) => ({
   queryKey: ["genre", genre],
@@ -17,10 +19,11 @@ const Sidebar = () => {
     setGenre,
     setCategory,
     setPage,
-    page,
     setCategoryPage,
+    page,
     categoryPage,
   } = useMovieCategory();
+  const [isActive, setIsActive] = useState<Category | string>("popular");
   const data = useLoaderData() as MovieListGenre;
   const queryClient = useQueryClient();
 
@@ -28,7 +31,8 @@ const Sidebar = () => {
     await queryClient.prefetchQuery(movieListGenreQuery(genre));
   };
 
-  const handleGenreMovies = (genre: number) => {
+  const handleGenreMovies = (genre: number, label: string) => {
+    setIsActive(label);
     if (page !== 1) {
       setPage(1);
     }
@@ -37,6 +41,7 @@ const Sidebar = () => {
   };
 
   const handleCategoryMovies = (category: Category) => {
+    setIsActive(category);
     if (categoryPage !== 1) {
       setCategoryPage(1);
     }
@@ -64,14 +69,14 @@ const Sidebar = () => {
               <li
                 key={category.value}
                 onClick={() => handleCategoryMovies(category.value as Category)}
-                className={`flex gap-3 base-medium text-dark200_light900 cursor-pointer`}
+                className={`flex gap-3 px-4 base-medium text-dark200_light900 cursor-pointer ${isActive === category.value ? "primary-gradient px-4 py-3 rounded-md light-border shadow-light-200" : ""}`}
               >
                 <img
                   src={category.icon}
                   alt={category.label}
                   width={27}
                   height={27}
-                  className="invert-colors"
+                  className="dark:invert object-contain"
                 />
                 <p>{category.label}</p>
               </li>
@@ -87,33 +92,21 @@ const Sidebar = () => {
           {data.genres.map((genre) => (
             <li key={genre.id}>
               <button
-                className={`flex gap-3 base-medium text-dark200_light900 w-full`}
-                onClick={() => handleGenreMovies(genre.id)}
+                className={`flex gap-3 px-4 base-medium text-dark200_light900 w-full ${isActive === genre.name ? "py-3 primary-gradient rounded-md" : ""}`}
+                onClick={() => handleGenreMovies(genre.id, genre.name)}
                 onMouseEnter={() => handleMouseEnter(genre.id)}
               >
-                <img src={""} alt={""} width={27} height={27} />
+                <img
+                  src={genresIcon[genre.name.toLowerCase()]}
+                  alt={""}
+                  width={27}
+                  height={27}
+                  className="dark:invert object-contain"
+                />
                 {genre.name}
               </button>
             </li>
           ))}
-          {/* {genres.map((genre) => {
-            return (
-              <li key={genre.href}>
-                <NavLink
-                  to={genre.href}
-                  className={`flex gap-3 base-medium text-dark200_light900`}
-                >
-                  <img
-                    src={genre.icon}
-                    alt={genre.label}
-                    width={27}
-                    height={27}
-                  />
-                  {genre.label}
-                </NavLink>
-              </li>
-            );
-          })} */}
         </ul>
       </div>
     </div>

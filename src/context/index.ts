@@ -1,4 +1,4 @@
-import { ThemeProvider } from "./ThemeContext";
+import { ThemeProvider, useTheme } from "./ThemeContext";
 import { MovieProvider } from "./MovieContext";
 
-export { ThemeProvider, MovieProvider };
+export { ThemeProvider, MovieProvider, useTheme };
