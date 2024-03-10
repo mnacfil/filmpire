@@ -33,7 +33,12 @@ const Navbar = () => {
       <ToggleTheme />
       <form onSubmit={handleSubmit}>
         <div className="flex gap-2 border-b-2 border-b-slate-400">
-          <CiLight />
+          <img
+            src={navIcons.search}
+            alt="search"
+            width={20}
+            className="dark:invert object-contain"
+          />
           <input
             type="text"
             className="bg-transparent outline-none border-none mb-1"
@@ -44,7 +49,13 @@ const Navbar = () => {
         <p className="text-dark200_light800 uppercase font-semibold tracking-wide">
           {sessionIdFromLS ? "User" : "Login"}
         </p>
-        <img src={navIcons.user} alt="user avatar" width={24} height={24} />
+        <img
+          src={navIcons.user}
+          alt="user avatar"
+          width={27}
+          height={27}
+          className="dark:invert object-contain"
+        />
       </button>
     </nav>
   );

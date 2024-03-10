@@ -20,7 +20,7 @@ const MovieList = ({ data }: Props) => {
   const mainMovie = data?.results[0];
 
   return (
-    <div className="flex flex-col w-full h-full gap-10">
+    <div className="flex flex-col justify-between w-full h-full gap-10">
       <Link
         to={`/movie/${mainMovie?.id}`}
         className="block relative opacity-90"

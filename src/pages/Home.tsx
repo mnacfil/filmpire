@@ -24,7 +24,11 @@ const Home = () => {
     useMovieCategory();
 
   if (moviesGenreQuery.isLoading || moviesCategoryQuery.isLoading) {
-    return <p>Loading...</p>;
+    return (
+      <p className="min-h-screen w-full flex items-center justify-center text-4xl text-dark200_light900">
+        Loading...
+      </p>
+    );
   }
   if (moviesGenreQuery.error || moviesCategoryQuery.error) {
     return <p className="pl-80">Error happen</p>;
