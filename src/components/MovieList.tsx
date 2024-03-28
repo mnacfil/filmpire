@@ -3,9 +3,9 @@ import { ImagesConfiguration, Movie, Movies } from "../types";
 import { Link } from "react-router-dom";
 import { useQueryClient } from "@tanstack/react-query";
 import { configurationQuery } from "../RootLayout";
-import { ImStarEmpty, ImStarFull, ImStarHalf } from "react-icons/im";
 import Rating from "./Rating";
 import Pagination from "./Pagination";
+
 type Props = {
   data: Movies | undefined;
 };

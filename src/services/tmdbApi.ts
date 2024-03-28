@@ -4,6 +4,7 @@ import {
   AuthRequestToken,
   AuthSession,
   ImagesConfiguration,
+  MovieById,
   MovieListGenre,
   Movies,
 } from "../types";
@@ -24,7 +25,6 @@ export const getMovieGenre = async () => {
 
 export const getMovieListByGenre = async (genre: number, page: number) => {
   try {
-    // page must be dynamic as it is used in pagination
     const response = await axiosInstance.get<Movies>(
       `/discover/movie?with_genres=${genre}&page=${page}`
     );
@@ -101,5 +101,17 @@ export const getConfiguration = async () => {
     return response.data;
   } catch (error) {
     return Promise.reject(error);
+  }
+};
+
+export const getMovieById = async (movieId: string) => {
+  try {
+    const response = await axiosInstance.get<MovieById>(
+      `/movie/${movieId}?append_to_response=videos,credits,recommendations`
+    );
+    return response.data;
+  } catch (error) {
+    console.log(error);
+    throw error;
   }
 };

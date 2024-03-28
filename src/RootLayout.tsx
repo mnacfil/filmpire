@@ -56,7 +56,7 @@ const RootLayout = () => {
         <div className="min-w-[240px] z-20 fixed left-0 top-0">
           <Sidebar />
         </div>
-        <section className="flex flex-1 w-full flex-col h-full pt-28 !pl-72 px-6 sm:px-12 background-light900_dark200">
+        <section className="flex flex-1 w-full flex-col min-h-svh pt-28 !pl-72 px-6 sm:px-12 background-light900_dark200">
           <Outlet />
         </section>
       </div>
